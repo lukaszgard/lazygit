@@ -19,6 +19,7 @@ func keybindings(g *gocui.Gui) error {
 		Binding{ViewName: "", Key: gocui.KeyPgup, Modifier: gocui.ModNone, Handler: scrollUpMain},
 		Binding{ViewName: "", Key: gocui.KeyPgdn, Modifier: gocui.ModNone, Handler: scrollDownMain},
 		Binding{ViewName: "", Key: 'P', Modifier: gocui.ModNone, Handler: pushFiles},
+		Binding{ViewName: "", Key: 'E', Modifier: gocui.ModNone, Handler: pushReference},
 		Binding{ViewName: "", Key: 'p', Modifier: gocui.ModNone, Handler: pullFiles},
 		Binding{ViewName: "", Key: 'R', Modifier: gocui.ModNone, Handler: handleRefresh},
 		Binding{ViewName: "files", Key: 'c', Modifier: gocui.ModNone, Handler: handleCommitPress},

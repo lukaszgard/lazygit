@@ -327,6 +327,29 @@ func pushFiles(g *gocui.Gui, v *gocui.View) error {
 	return nil
 }
 
+func pushReference(g *gocui.Gui, filesView *gocui.View) error {
+	createPromptPanel(g, filesView, "Reference name", func(g *gocui.Gui, v *gocui.View) error {
+		reference := trimmedContent(v)
+		if reference == "" {
+			return createErrorPanel(g, "You cannot push to empty reference")
+		}
+		devLog("pushing...")
+		createMessagePanel(g, v, "", "Pushing...")
+		go func() {
+			if output, err := gitPushReference(reference); err != nil {
+				createErrorPanel(g, output)
+			} else {
+				closeConfirmationPrompt(g)
+				refreshCommits(g)
+				refreshStatus(g)
+				devLog("pushed.")
+			}
+		}()
+		return nil
+	})
+	return nil
+}
+
 func handleSwitchToMerge(g *gocui.Gui, v *gocui.View) error {
 	mergeView, err := g.View("main")
 	if err != nil {

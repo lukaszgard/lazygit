@@ -487,6 +487,15 @@ func gitPush() (string, error) {
 	return runDirectCommand("git push -u origin " + branchName)
 }
 
+func gitPushReference(reference string) (string, error) {
+	branchName := gitCurrentBranchName()
+	referenceName := ""
+	if branchName == "" {
+		return "", ErrNoCheckedOutBranch
+	}
+	return runDirectCommand("git push -u origin " + referenceName)
+}
+
 func gitSquashPreviousTwoCommits(message string) (string, error) {
 	return runDirectCommand("git reset --soft HEAD^ && git commit --amend -m \"" + message + "\"")
 }
