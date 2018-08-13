@@ -488,12 +488,17 @@ func gitPush() (string, error) {
 }
 
 func gitPushReference(reference string) (string, error) {
-	branchName := gitCurrentBranchName()
-	referenceName := ""
-	if branchName == "" {
+	if reference == "" {
 		return "", ErrNoCheckedOutBranch
 	}
-	return runDirectCommand("git push -u origin " + referenceName)
+	// if .git/hooks/commit-msg exists then amend is needed to generate 'Change-Id: <key>' into msg.
+	if _, err := os.Stat(".git/hooks/commit-msg"); err == nil {
+		_, err := runDirectCommand("git commit --amend --no-edit")
+		if err != nil {
+			return "", err
+		}
+	}
+	return runDirectCommand("git push -u origin " + reference)
 }
 
 func gitSquashPreviousTwoCommits(message string) (string, error) {

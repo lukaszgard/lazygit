@@ -7,6 +7,7 @@
       q:                quit
       p:                pull
       shift+P:          push
+      shift+E:          push to reference
 
 ## Files Panel:
 
